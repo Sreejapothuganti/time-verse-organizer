@@ -1,8 +1,18 @@
-
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, isSameDay } from 'date-fns';
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  isSameMonth,
+  isToday,
+  isSameDay,
+  startOfWeek,
+  endOfWeek,
+} from 'date-fns';
 import { Event } from '@/types/event';
 import { CalendarDay } from './CalendarDay';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface CalendarGridProps {
   currentDate: Date;
@@ -12,47 +22,55 @@ interface CalendarGridProps {
   onEventDrop: (eventId: string, newDate: Date) => void;
 }
 
-export const CalendarGrid = ({ 
-  currentDate, 
-  events, 
-  onDateClick, 
+export const CalendarGrid = ({
+  currentDate,
+  events,
+  onDateClick,
   onEventClick,
-  onEventDrop 
+  onEventDrop,
 }: CalendarGridProps) => {
-  const monthStart = startOfMonth(currentDate);
-  const monthEnd = endOfMonth(currentDate);
-  
-  // Get the calendar grid (42 days including previous/next month days)
-  const calendarStart = new Date(monthStart);
-  calendarStart.setDate(calendarStart.getDate() - monthStart.getDay());
-  
-  const calendarEnd = new Date(calendarStart);
-  calendarEnd.setDate(calendarEnd.getDate() + 41);
-  
-  const calendarDays = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
+  const isMobile = useIsMobile(); // < 768px = weekly view
 
   const getEventsForDate = (date: Date) => {
-    return events.filter(event => 
-      isSameDay(event.startTime, date)
-    );
+    return events.filter((event) => isSameDay(event.startTime, date));
   };
 
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  let calendarDays: Date[];
+
+  if (isMobile) {
+    const weekStart = startOfWeek(currentDate, { weekStartsOn: 0 });
+    const weekEnd = endOfWeek(currentDate, { weekStartsOn: 0 });
+    calendarDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+  } else {
+    const monthStart = startOfMonth(currentDate);
+    const calendarStart = new Date(monthStart);
+    calendarStart.setDate(calendarStart.getDate() - calendarStart.getDay());
+
+    const calendarEnd = new Date(calendarStart);
+    calendarEnd.setDate(calendarEnd.getDate() + 41); // 42 days
+
+    calendarDays = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
+  }
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
       {/* Week day headers */}
-      <div className="grid grid-cols-7 bg-gray-50">
-        {weekDays.map(day => (
-          <div key={day} className="p-3 text-center text-sm font-medium text-gray-700 border-r border-gray-200 last:border-r-0">
+      <div className={`grid ${isMobile ? 'grid-cols-7' : 'grid-cols-7'} bg-gray-50`}>
+        {weekDays.map((day) => (
+          <div
+            key={day}
+            className="p-3 text-center text-sm font-medium text-gray-700 border-r border-gray-200 last:border-r-0"
+          >
             {day}
           </div>
         ))}
       </div>
 
       {/* Calendar grid */}
-      <div className="grid grid-cols-7">
-        {calendarDays.map((date, index) => {
+      <div className={`grid ${isMobile ? 'grid-cols-7' : 'grid-cols-7'}`}>
+        {calendarDays.map((date) => {
           const dayEvents = getEventsForDate(date);
           const isCurrentMonth = isSameMonth(date, currentDate);
           const isTodayDate = isToday(date);
