@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CalendarGrid } from '@/components/calendar/CalendarGrid';
 import { CalendarHeader } from '@/components/calendar/CalendarHeader';
 import { EventForm } from '@/components/events/EventForm';
@@ -7,11 +6,14 @@ import { EventDetails } from '@/components/events/EventDetails';
 import { SearchBar } from '@/components/calendar/SearchBar';
 import { useEvents } from '@/hooks/useEvents';
 import { useCalendar } from '@/hooks/useCalendar';
+import { useToast } from '@/components/ui/use-toast';
 import { Event } from '@/types/event';
 
 const Index = () => {
   const { currentDate, setCurrentDate, navigateMonth } = useCalendar();
-  const { events, addEvent, updateEvent, deleteEvent, searchEvents } = useEvents();
+  const { events, addEvent, updateEvent, deleteEvent, searchEvents, hasEventConflict } = useEvents();
+  const { toast } = useToast();
+
   const [showEventForm, setShowEventForm] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -49,16 +51,40 @@ const Index = () => {
 
   const handleEventDrop = (eventId: string, newDate: Date) => {
     const event = events.find(e => e.id === eventId);
-    if (event) {
-      const updatedEvent = {
-        ...event,
-        startTime: new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 
-          event.startTime.getHours(), event.startTime.getMinutes()),
-        endTime: new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 
-          event.endTime.getHours(), event.endTime.getMinutes())
-      };
-      updateEvent(eventId, updatedEvent);
+    if (!event) return;
+
+    const updatedStart = new Date(
+      newDate.getFullYear(),
+      newDate.getMonth(),
+      newDate.getDate(),
+      event.startTime.getHours(),
+      event.startTime.getMinutes()
+    );
+
+    const updatedEnd = new Date(
+      newDate.getFullYear(),
+      newDate.getMonth(),
+      newDate.getDate(),
+      event.endTime.getHours(),
+      event.endTime.getMinutes()
+    );
+
+    const newEventData = {
+      ...event,
+      startTime: updatedStart,
+      endTime: updatedEnd
+    };
+
+    const isConflict = hasEventConflict(newEventData, event.id);
+    if (isConflict) {
+      toast({
+        title: 'Conflict Detected',
+        description: 'This event overlaps with another event. Please choose a different time.',
+      });
+      return;
     }
+
+    updateEvent(eventId, newEventData);
   };
 
   return (
