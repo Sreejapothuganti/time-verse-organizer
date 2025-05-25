@@ -8,6 +8,7 @@ import { useEvents } from '@/hooks/useEvents';
 import { useCalendar } from '@/hooks/useCalendar';
 import { useToast } from '@/components/ui/use-toast';
 import { Event } from '@/types/event';
+import { Footer } from '@/components/ui/Footer';
 
 const Index = () => {
   const { currentDate, setCurrentDate, navigateMonth } = useCalendar();
