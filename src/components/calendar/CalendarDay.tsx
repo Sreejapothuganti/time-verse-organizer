@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { Event } from '@/types/event';
 import { EventCard } from '../events/EventCard';
 import { cn } from '@/lib/utils';
+import { CalendarOff } from 'lucide-react';
 
 interface CalendarDayProps {
   date: Date;
@@ -85,8 +86,13 @@ export const CalendarDay = ({
         ))}
 
         {hiddenCount > 0 && (
-          <div className="text-xs text-gray-500 px-1">
-            +{hiddenCount} more
+          <div className="text-xs text-gray-500 px-1">+{hiddenCount} more</div>
+        )}
+
+        {events.length === 0 && (
+          <div className="text-gray-400 text-xs flex items-center gap-1 justify-center pt-6">
+            <CalendarOff className="h-3.5 w-3.5" />
+            No events
           </div>
         )}
       </div>
