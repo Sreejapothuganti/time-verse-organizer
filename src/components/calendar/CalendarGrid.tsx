@@ -20,7 +20,7 @@ interface CalendarGridProps {
   onDateClick: (date: Date) => void;
   onEventClick: (event: Event) => void;
   onEventDrop: (eventId: string, newDate: Date) => void;
-  viewMode: 'weekly' | 'daily'; // added
+  viewMode: 'weekly' | 'daily';
 }
 
 export const CalendarGrid = ({
@@ -39,7 +39,7 @@ export const CalendarGrid = ({
 
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  let calendarDays: Date[];
+  let calendarDays: Date[] = [];
 
   if (isMobile) {
     if (viewMode === 'daily') {
@@ -53,17 +53,15 @@ export const CalendarGrid = ({
     const monthStart = startOfMonth(currentDate);
     const calendarStart = new Date(monthStart);
     calendarStart.setDate(calendarStart.getDate() - calendarStart.getDay());
-
     const calendarEnd = new Date(calendarStart);
-    calendarEnd.setDate(calendarEnd.getDate() + 41); // 42 days
-
+    calendarEnd.setDate(calendarEnd.getDate() + 41); // 6 weeks grid
     calendarDays = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
   }
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-      {/* Week day headers */}
-      <div className={`grid grid-cols-7 bg-gray-50`}>
+      {/* Week headers */}
+      <div className="grid grid-cols-7 bg-gray-50">
         {weekDays.map((day) => (
           <div
             key={day}
@@ -74,8 +72,13 @@ export const CalendarGrid = ({
         ))}
       </div>
 
-      {/* Calendar grid */}
-      <div className={`grid ${isMobile ? `grid-cols-${calendarDays.length}` : 'grid-cols-7'}`}>
+      {/* Grid */}
+      <div
+        className={cn(
+          'grid',
+          isMobile && viewMode === 'daily' ? 'grid-cols-1' : 'grid-cols-7'
+        )}
+      >
         {calendarDays.map((date) => {
           const dayEvents = getEventsForDate(date);
           const isCurrentMonth = isSameMonth(date, currentDate);
