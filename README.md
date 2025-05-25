@@ -1,6 +1,6 @@
 # 🗓️ TimeVerse – Custom Event Calendar
 
-A dynamic, responsive event calendar built with React and Tailwind CSS. Users can add, edit, delete, and reschedule both one-time and recurring events. Designed to provide a polished user experience with modern UI, drag-and-drop interactions, and offline persistence.
+A dynamic, responsive event calendar built with React and Tailwind CSS. Users can add, edit, delete, and reschedule both one-time and recurring events. Designed with a warm modern UI and smooth interactions, this app showcases advanced front-end capabilities with polished UX details.
 
 ---
 
@@ -8,38 +8,37 @@ A dynamic, responsive event calendar built with React and Tailwind CSS. Users ca
 
 ### ✅ Core Functionality
 - **Monthly, Weekly, and Daily Views**
-- **Add/Edit/Delete Events**
-- **Recurring Events** (Daily / Weekly / Monthly / Custom)
+- **Add / Edit / Delete Events**
+- **Recurring Events**: Daily, Weekly, Monthly, Custom Intervals
 - **Drag-and-Drop Rescheduling**
 - **Event Conflict Detection**
-- **Live Search by Title or Description**
-- **Persistent Local Storage**
+- **Search Events by Title or Description**
+- **Persistent Storage via LocalStorage**
 
-### 🎨 UX Enhancements
-- Empty state illustrations (e.g. “No events”)
-- Color-coded events with fade-in animation
-- ARIA accessibility for calendar and events
-- Toast notifications with smooth transitions
-- Fully responsive design for mobile + desktop
-- Warm-themed UI with subtle gradients and modern styling
-- Footer credits: Built with ❤️ by Sreeja Pothuganti
-
----
-
-## 🛠️ Tech Stack
-
-- **React + Vite**
-- **TypeScript**
-- **Tailwind CSS** (with custom warm theme)
-- **date-fns** (for all date logic)
-- **Radix UI Toast** (for accessible notifications)
-- **HTML5 Drag-and-Drop** (native)
+### 🎨 Polished UI
+- Empty state illustrations (e.g., “No events”)
+- Soft transitions and hover effects
+- Mobile-first responsive layout
+- Color-coded event cards with fade-in animation
+- ARIA support and accessibility enhancements
+- Toast notifications with animated feedback
+- Built-in footer: _Built with ❤️ by Sreeja Pothuganti_
 
 ---
 
-## 🧪 Setup Instructions
+## 🧰 Tech Stack
 
-### 1. **Clone the repository**
+- **React + Vite + TypeScript**
+- **Tailwind CSS** with custom warm theme
+- **date-fns** for date/time manipulation
+- **Radix UI Toast** for notifications
+- **HTML5 Native Drag-and-Drop**
+
+---
+
+## 🧪 Getting Started
+
+### 1. Clone the repository
 ```bash
 git clone https://github.com/your-username/timeverse-calendar.git
 cd timeverse-calendar
@@ -49,39 +48,44 @@ bash
 Copy
 Edit
 npm install
+
 3. Start the development server
 bash
 Copy
 Edit
 npm run dev
-Your app will be live at http://localhost:5173
+Visit the app at: http://localhost:5173
 
-📦 Build for Production
-To build a production-ready static site:
-
+🏗️ Build for Production
 bash
 Copy
 Edit
 npm run build
-To preview the built site:
+To preview the built app locally:
 
 bash
 Copy
 Edit
 npm run preview
-🌐 Deployment Notes
-This app is ready to deploy on any static hosting platform like Vercel, Netlify, or GitHub Pages.
-If using Vercel:
 
-No extra config needed; just import your GitHub repo.
+🌍 Deployment (Vercel / Netlify)
+This project is fully deployable on any static host like Vercel, Netlify, or GitHub Pages.
 
-Make sure the build command is npm run build
+Build Command: npm run build
 
-Set output directory to dist
+Output Directory: dist
 
-📄 Special Notes
-No external backend or database is required — events are persisted locally using localStorage.
+No additional backend or server is required.
 
-All recurring logic is computed at runtime and rendered dynamically.
+📌 Notes
+All events are saved locally in your browser.
 
-The calendar is fully responsive and optimized for both desktop and mobile views.
+No authentication or backend required.
+
+Recurrence logic and conflict detection run client-side.
+
+Designed as part of a Kalvium frontend engineering assignment.
+
+👩‍💻 Author
+Sreeja Pothuganti
+Frontend Developer | Passionate about building delightful user experiences
