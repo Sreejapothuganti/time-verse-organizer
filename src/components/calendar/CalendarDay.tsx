@@ -39,7 +39,6 @@ export const CalendarDay = ({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-
     const eventId = e.dataTransfer.getData('text/plain');
     if (eventId) {
       onEventDrop(eventId, date);
@@ -62,6 +61,7 @@ export const CalendarDay = ({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
+      aria-label={`Calendar day ${format(date, 'PPP')}`}
     >
       <div
         className={cn(
@@ -72,30 +72,32 @@ export const CalendarDay = ({
         {format(date, 'd')}
       </div>
 
-      <div className="space-y-1">
-        {visibleEvents.map((event, index) => (
-          <EventCard
-            key={`${event.id}-${index}`}
-            event={event}
-            onClick={(e) => {
-              e.stopPropagation();
-              onEventClick(event);
-            }}
-            compact
-          />
-        ))}
+      {events.length === 0 ? (
+        <div className="flex flex-col items-center justify-center mt-4 text-gray-400">
+          <CalendarOff className="w-4 h-4 mb-1" />
+          <span className="text-xs">No events</span>
+        </div>
+      ) : (
+        <div className="space-y-1">
+          {visibleEvents.map((event, index) => (
+            <EventCard
+              key={`${event.id}-${index}`}
+              event={event}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEventClick(event);
+              }}
+              compact
+            />
+          ))}
 
-        {hiddenCount > 0 && (
-          <div className="text-xs text-gray-500 px-1">+{hiddenCount} more</div>
-        )}
-
-        {events.length === 0 && (
-          <div className="text-gray-400 text-xs flex items-center gap-1 justify-center pt-6">
-            <CalendarOff className="h-3.5 w-3.5" />
-            No events
-          </div>
-        )}
-      </div>
+          {hiddenCount > 0 && (
+            <div className="text-xs text-gray-500 px-1">
+              +{hiddenCount} more
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
