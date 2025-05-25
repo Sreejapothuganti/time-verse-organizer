@@ -117,10 +117,13 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full" role="form" aria-labelledby="event-form-title">
       <CardHeader>
-        <CardTitle>{event ? 'Edit Event' : 'Create Event'}</CardTitle>
+        <CardTitle id="event-form-title">
+          {event ? 'Edit Event' : 'Create Event'}
+        </CardTitle>
       </CardHeader>
+
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -130,6 +133,8 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
               required
+              aria-required="true"
+              aria-label="Event Title"
             />
           </div>
 
@@ -140,6 +145,7 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               rows={3}
+              aria-label="Description"
             />
           </div>
 
@@ -152,6 +158,8 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                 value={formData.startDate}
                 onChange={(e) => setFormData(prev => ({ ...prev, startDate: e.target.value }))}
                 required
+                aria-required="true"
+                aria-label="Start Date"
               />
             </div>
             <div>
@@ -162,6 +170,8 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                 value={formData.startTime}
                 onChange={(e) => setFormData(prev => ({ ...prev, startTime: e.target.value }))}
                 required
+                aria-required="true"
+                aria-label="Start Time"
               />
             </div>
           </div>
@@ -175,6 +185,8 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                 value={formData.endDate}
                 onChange={(e) => setFormData(prev => ({ ...prev, endDate: e.target.value }))}
                 required
+                aria-required="true"
+                aria-label="End Date"
               />
             </div>
             <div>
@@ -185,6 +197,8 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                 value={formData.endTime}
                 onChange={(e) => setFormData(prev => ({ ...prev, endTime: e.target.value }))}
                 required
+                aria-required="true"
+                aria-label="End Time"
               />
             </div>
           </div>
@@ -195,7 +209,8 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
               id="category"
               value={formData.category}
               onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-              placeholder="e.g., Work, Personal, Health"
+              placeholder="e.g., Work, Personal"
+              aria-label="Category"
             />
           </div>
 
@@ -206,12 +221,13 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                 <button
                   key={color.value}
                   type="button"
-                  className={`w-8 h-8 rounded-full border-2 transition-colors duration-150 ${
+                  className={`w-8 h-8 rounded-full border-2 transition-all duration-150 ${
                     formData.color === color.value ? 'border-gray-800' : 'border-gray-300'
                   }`}
                   style={{ backgroundColor: color.value }}
                   onClick={() => setFormData(prev => ({ ...prev, color: color.value }))}
                   title={color.name}
+                  aria-label={`Select ${color.name} color`}
                 />
               ))}
             </div>
@@ -222,12 +238,13 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
               id="recurring"
               checked={formData.isRecurring}
               onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isRecurring: checked }))}
+              aria-label="Toggle recurring event"
             />
             <Label htmlFor="recurring">Recurring Event</Label>
           </div>
 
           {formData.isRecurring && (
-            <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
+            <fieldset className="space-y-4 p-4 bg-gray-50 rounded-lg" aria-label="Recurring options">
               <div>
                 <Label>Recurrence Type</Label>
                 <Select
@@ -249,9 +266,10 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
               </div>
 
               <div>
-                <Label>Every</Label>
+                <Label htmlFor="recurrenceInterval">Every</Label>
                 <div className="flex items-center gap-2">
                   <Input
+                    id="recurrenceInterval"
                     type="number"
                     min="1"
                     max="365"
@@ -263,6 +281,7 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                       }))
                     }
                     className="w-20"
+                    aria-label="Recurrence Interval"
                   />
                   <span className="text-sm text-gray-600">
                     {formData.recurrenceType === 'daily' && 'day(s)'}
@@ -283,6 +302,7 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                     onChange={(e) =>
                       setFormData(prev => ({ ...prev, recurrenceEndDate: e.target.value }))
                     }
+                    aria-label="Recurrence End Date"
                   />
                 </div>
                 <div>
@@ -299,17 +319,18 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                         recurrenceOccurrences: parseInt(e.target.value) || 10,
                       }))
                     }
+                    aria-label="Max Occurrences"
                   />
                 </div>
               </div>
-            </div>
+            </fieldset>
           )}
 
           <div className="flex gap-2 pt-4">
-            <Button type="submit" className="flex-1">
+            <Button type="submit" className="flex-1" aria-label={event ? 'Update Event' : 'Create Event'}>
               {event ? 'Update Event' : 'Create Event'}
             </Button>
-            <Button type="button" variant="outline" onClick={onCancel}>
+            <Button type="button" variant="outline" onClick={onCancel} aria-label="Cancel">
               Cancel
             </Button>
           </div>
