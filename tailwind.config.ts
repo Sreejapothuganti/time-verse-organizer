@@ -65,8 +65,7 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-
-        // ✅ Warm theme extension
+        // Warm theme extension
         warm: {
           50: "#fefae8",
           100: "#fef3c7",
@@ -84,7 +83,6 @@ export default {
         muted: "#f4ede4",
         accent: "#f6ad55",
       },
-
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -99,10 +97,30 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "fade-out": {
+          from: { opacity: "1" },
+          to: { opacity: "0" },
+        },
+        "slide-in-from-bottom": {
+          from: { transform: "translateY(100%)" },
+          to: { transform: "translateY(0)" },
+        },
+        "slide-out-to-right": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.3s ease-out",
+        "fade-out": "fade-out 0.3s ease-in",
+        "slide-in-from-bottom": "slide-in-from-bottom 0.4s ease-out",
+        "slide-out-to-right": "slide-out-to-right 0.4s ease-in",
       },
       boxShadow: {
         md: "0 4px 6px rgba(0, 0, 0, 0.1)",
