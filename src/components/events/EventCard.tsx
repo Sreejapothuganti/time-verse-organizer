@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 interface EventCardProps {
   event: Event;
-  onClick: (e: React.MouseEvent) => void;
+  onClick: (e: React.MouseEvent | React.KeyboardEvent) => void;
   compact?: boolean;
 }
 
@@ -14,14 +14,25 @@ export const EventCard = ({ event, onClick, compact = false }: EventCardProps) =
     e.dataTransfer.effectAllowed = 'move';
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick(e);
+    }
+  };
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label={`${event.title}, from ${format(event.startTime, 'h:mm a')} to ${format(event.endTime, 'h:mm a')}`}
       className={cn(
         'rounded-md text-white cursor-pointer shadow-sm hover:scale-[1.03] active:scale-100 transition-all duration-150 ease-in-out overflow-hidden',
         compact ? 'text-xs p-1' : 'text-sm p-2'
       )}
       style={{ backgroundColor: event.color }}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
       draggable
       onDragStart={handleDragStart}
       title={`${event.title} - ${format(event.startTime, 'HH:mm')} to ${format(event.endTime, 'HH:mm')}`}
