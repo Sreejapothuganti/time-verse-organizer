@@ -61,7 +61,9 @@ export const CalendarDay = ({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      aria-label={`Calendar day ${format(date, 'PPP')}`}
+      role="button"
+      aria-label={`Day ${format(date, 'PPP')}, ${events.length} event${events.length === 1 ? '' : 's'}`}
+      tabIndex={0}
     >
       <div
         className={cn(
@@ -74,11 +76,11 @@ export const CalendarDay = ({
 
       {events.length === 0 ? (
         <div className="flex flex-col items-center justify-center mt-4 text-gray-400">
-          <CalendarOff className="w-4 h-4 mb-1" />
+          <CalendarOff className="w-4 h-4 mb-1" aria-hidden="true" />
           <span className="text-xs">No events</span>
         </div>
       ) : (
-        <div className="space-y-1">
+        <div className="space-y-1" role="list" aria-label="Events for the day">
           {visibleEvents.map((event, index) => (
             <EventCard
               key={`${event.id}-${index}`}
@@ -92,7 +94,7 @@ export const CalendarDay = ({
           ))}
 
           {hiddenCount > 0 && (
-            <div className="text-xs text-gray-500 px-1">
+            <div className="text-xs text-gray-500 px-1" aria-label={`${hiddenCount} more events`}>
               +{hiddenCount} more
             </div>
           )}
