@@ -18,6 +18,7 @@ const Index = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [viewMode, setViewMode] = useState<'weekly' | 'daily'>('weekly'); // New view mode
 
   const filteredEvents = searchEvents(searchTerm);
 
@@ -101,18 +102,21 @@ const Index = () => {
                   onSearchChange={setSearchTerm}
                 />
               </div>
-              
+
               <CalendarHeader 
                 currentDate={currentDate}
                 onNavigate={navigateMonth}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
               />
-              
+
               <CalendarGrid
                 currentDate={currentDate}
                 events={filteredEvents}
                 onDateClick={handleDateClick}
                 onEventClick={handleEventClick}
                 onEventDrop={handleEventDrop}
+                viewMode={viewMode}
               />
             </div>
 
