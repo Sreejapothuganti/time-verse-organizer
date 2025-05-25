@@ -7,6 +7,7 @@ interface CalendarHeaderProps {
   onNavigate: (direction: 'prev' | 'next') => void;
   viewMode: 'weekly' | 'daily';
   setViewMode: (mode: 'weekly' | 'daily') => void;
+  onToday: () => void; // 🆕 added callback
 }
 
 export const CalendarHeader = ({
@@ -14,6 +15,7 @@ export const CalendarHeader = ({
   onNavigate,
   viewMode,
   setViewMode,
+  onToday,
 }: CalendarHeaderProps) => {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
@@ -37,6 +39,13 @@ export const CalendarHeader = ({
           className="hover:bg-blue-50"
         >
           <ChevronRight className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={onToday}
+        >
+          Today
         </Button>
 
         <Button
