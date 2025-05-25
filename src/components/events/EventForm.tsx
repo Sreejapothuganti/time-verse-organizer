@@ -8,6 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useEvents } from '@/hooks/useEvents';
+import { useToast } from '@/components/ui/use-toast';
 
 interface EventFormProps {
   event?: Event | null;
@@ -17,6 +19,9 @@ interface EventFormProps {
 }
 
 export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormProps) => {
+  const { hasEventConflict } = useEvents();
+  const { toast } = useToast();
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -64,7 +69,7 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const startDateTime = new Date(`${formData.startDate}T${formData.startTime}`);
     const endDateTime = new Date(`${formData.endDate}T${formData.endTime}`);
 
@@ -88,6 +93,16 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
       isRecurring: formData.isRecurring,
       recurrence,
     };
+
+    const conflict = hasEventConflict(eventData, event?.id);
+
+    if (conflict) {
+      toast({
+        title: 'Conflict Detected',
+        description: 'This event overlaps with another event. Please pick a different time.',
+      });
+      return;
+    }
 
     onSave(eventData);
   };
@@ -208,7 +223,7 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                 <Label>Recurrence Type</Label>
                 <Select
                   value={formData.recurrenceType}
-                  onValueChange={(value: 'daily' | 'weekly' | 'monthly' | 'custom') => 
+                  onValueChange={(value: 'daily' | 'weekly' | 'monthly' | 'custom') =>
                     setFormData(prev => ({ ...prev, recurrenceType: value }))
                   }
                 >
@@ -232,10 +247,12 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                     min="1"
                     max="365"
                     value={formData.recurrenceInterval}
-                    onChange={(e) => setFormData(prev => ({ 
-                      ...prev, 
-                      recurrenceInterval: parseInt(e.target.value) || 1 
-                    }))}
+                    onChange={(e) =>
+                      setFormData(prev => ({
+                        ...prev,
+                        recurrenceInterval: parseInt(e.target.value) || 1,
+                      }))
+                    }
                     className="w-20"
                   />
                   <span className="text-sm text-gray-600">
@@ -254,7 +271,9 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                     id="recurrenceEndDate"
                     type="date"
                     value={formData.recurrenceEndDate}
-                    onChange={(e) => setFormData(prev => ({ ...prev, recurrenceEndDate: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData(prev => ({ ...prev, recurrenceEndDate: e.target.value }))
+                    }
                   />
                 </div>
                 <div>
@@ -265,10 +284,12 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                     min="1"
                     max="100"
                     value={formData.recurrenceOccurrences}
-                    onChange={(e) => setFormData(prev => ({ 
-                      ...prev, 
-                      recurrenceOccurrences: parseInt(e.target.value) || 10 
-                    }))}
+                    onChange={(e) =>
+                      setFormData(prev => ({
+                        ...prev,
+                        recurrenceOccurrences: parseInt(e.target.value) || 10,
+                      }))
+                    }
                   />
                 </div>
               </div>
