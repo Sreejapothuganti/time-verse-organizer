@@ -73,6 +73,15 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
     const startDateTime = new Date(`${formData.startDate}T${formData.startTime}`);
     const endDateTime = new Date(`${formData.endDate}T${formData.endTime}`);
 
+    if (endDateTime <= startDateTime) {
+      toast({
+        variant: 'destructive',
+        title: 'Invalid Time Range',
+        description: 'End time must be after start time.',
+      });
+      return;
+    }
+
     let recurrence: RecurrencePattern | undefined;
     if (formData.isRecurring) {
       recurrence = {
@@ -95,9 +104,9 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
     };
 
     const conflict = hasEventConflict(eventData, event?.id);
-
     if (conflict) {
       toast({
+        variant: 'destructive',
         title: 'Conflict Detected',
         description: 'This event overlaps with another event. Please pick a different time.',
       });
@@ -197,7 +206,7 @@ export const EventForm = ({ event, selectedDate, onSave, onCancel }: EventFormPr
                 <button
                   key={color.value}
                   type="button"
-                  className={`w-8 h-8 rounded-full border-2 ${
+                  className={`w-8 h-8 rounded-full border-2 transition-colors duration-150 ${
                     formData.color === color.value ? 'border-gray-800' : 'border-gray-300'
                   }`}
                   style={{ backgroundColor: color.value }}
