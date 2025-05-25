@@ -1,69 +1,45 @@
-⚙️ Setup and Run Instructions
-Prerequisites
-Node.js (version 16 or higher)
+# 🗓️ TimeVerse – Custom Event Calendar
 
-npm or yarn package manager
+A dynamic, responsive event calendar built with React and Tailwind CSS. Users can add, edit, delete, and reschedule both one-time and recurring events. Designed to provide a polished user experience with modern UI, drag-and-drop interactions, and offline persistence.
 
-Installation
-Clone the repository
+---
 
-bash
-Copy
-Edit
-git clone <repository-url>
-cd calendar-event-commander
-Install dependencies
+## 🚀 Features
 
-bash
-Copy
-Edit
-npm install
-# or
-yarn install
-Running the Project
-bash
-Copy
-Edit
-npm run dev
-# or
-yarn dev
-Open your browser and go to:
-http://localhost:8080
+### ✅ Core Functionality
+- **Monthly, Weekly, and Daily Views**
+- **Add/Edit/Delete Events**
+- **Recurring Events** (Daily / Weekly / Monthly / Custom)
+- **Drag-and-Drop Rescheduling**
+- **Event Conflict Detection**
+- **Live Search by Title or Description**
+- **Persistent Local Storage**
 
-📅 Features Overview
-Monthly Calendar View: Navigate between months using arrow buttons
+### 🎨 UX Enhancements
+- Empty state illustrations (e.g. “No events”)
+- Color-coded events with fade-in animation
+- ARIA accessibility for calendar and events
+- Toast notifications with smooth transitions
+- Fully responsive design for mobile + desktop
+- Warm-themed UI with subtle gradients and modern styling
+- Footer credits: Built with ❤️ by Sreeja Pothuganti
 
-Event Management: Click any day to add events; edit or delete by clicking existing events
+---
 
-Recurring Events: Supports daily, weekly, monthly, and custom recurrence options
+## 🛠️ Tech Stack
 
-Drag & Drop: Drag events between days to reschedule them
+- **React + Vite**
+- **TypeScript**
+- **Tailwind CSS** (with custom warm theme)
+- **date-fns** (for all date logic)
+- **Radix UI Toast** (for accessible notifications)
+- **HTML5 Drag-and-Drop** (native)
 
-Search & Filter: Filter events by title or description using the search bar
+---
 
-Conflict Detection: Displays warnings for overlapping or conflicting events
+## 🧪 Setup Instructions
 
-Data Persistence: Events are saved automatically to the browser's local storage
-
-🧱 Project Structure & Stack
-React 18 with TypeScript
-
-Vite for fast development and builds
-
-Tailwind CSS for utility-first styling
-
-shadcn/ui for reusable UI components
-
-date-fns for precise date/time manipulation
-
-State Management: React Hooks + Local Storage (no external libraries)
-
-📝 Special Notes
-Events persist across sessions using browser local storage
-
-The calendar automatically highlights today’s date
-
-Fully responsive layout supports desktop and mobile
-
-This is a frontend-only application — no backend or server required
-
+### 1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/timeverse-calendar.git
+cd timeverse-calendar
