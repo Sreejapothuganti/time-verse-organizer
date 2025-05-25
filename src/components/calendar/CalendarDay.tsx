@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { Event } from '@/types/event';
@@ -39,34 +38,36 @@ export const CalendarDay = ({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    
+
     const eventId = e.dataTransfer.getData('text/plain');
     if (eventId) {
       onEventDrop(eventId, date);
     }
   };
 
-  const visibleEvents = events.slice(0, 3); // Show max 3 events
+  const visibleEvents = events.slice(0, 3);
   const hiddenCount = Math.max(0, events.length - 3);
 
   return (
     <div
       className={cn(
-        "min-h-[120px] p-2 border-r border-b border-gray-200 last:border-r-0 cursor-pointer transition-colors relative",
-        !isCurrentMonth && "bg-gray-50 text-gray-400",
-        isCurrentMonth && "hover:bg-blue-50",
-        isDragOver && "bg-blue-100 border-blue-300",
-        isToday && "bg-blue-50"
+        'min-h-[120px] p-2 border-r border-b border-gray-200 last:border-r-0 cursor-pointer relative transition-colors duration-150 ease-in-out rounded-sm',
+        !isCurrentMonth && 'bg-gray-50 text-gray-400',
+        isCurrentMonth && 'hover:bg-blue-50',
+        isToday && 'bg-blue-100 font-semibold',
+        isDragOver && 'ring-2 ring-blue-400 bg-blue-50'
       )}
       onClick={onClick}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      <div className={cn(
-        "text-sm font-medium mb-1",
-        isToday && "text-blue-600 font-bold"
-      )}>
+      <div
+        className={cn(
+          'text-sm font-semibold mb-1',
+          isToday ? 'text-blue-700' : 'text-gray-700'
+        )}
+      >
         {format(date, 'd')}
       </div>
 
@@ -82,7 +83,7 @@ export const CalendarDay = ({
             compact
           />
         ))}
-        
+
         {hiddenCount > 0 && (
           <div className="text-xs text-gray-500 px-1">
             +{hiddenCount} more
