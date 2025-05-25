@@ -20,6 +20,7 @@ interface CalendarGridProps {
   onDateClick: (date: Date) => void;
   onEventClick: (event: Event) => void;
   onEventDrop: (eventId: string, newDate: Date) => void;
+  viewMode: 'weekly' | 'daily'; // added
 }
 
 export const CalendarGrid = ({
@@ -28,8 +29,9 @@ export const CalendarGrid = ({
   onDateClick,
   onEventClick,
   onEventDrop,
+  viewMode,
 }: CalendarGridProps) => {
-  const isMobile = useIsMobile(); // < 768px = weekly view
+  const isMobile = useIsMobile();
 
   const getEventsForDate = (date: Date) => {
     return events.filter((event) => isSameDay(event.startTime, date));
@@ -40,9 +42,13 @@ export const CalendarGrid = ({
   let calendarDays: Date[];
 
   if (isMobile) {
-    const weekStart = startOfWeek(currentDate, { weekStartsOn: 0 });
-    const weekEnd = endOfWeek(currentDate, { weekStartsOn: 0 });
-    calendarDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+    if (viewMode === 'daily') {
+      calendarDays = [currentDate];
+    } else {
+      const weekStart = startOfWeek(currentDate, { weekStartsOn: 0 });
+      const weekEnd = endOfWeek(currentDate, { weekStartsOn: 0 });
+      calendarDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+    }
   } else {
     const monthStart = startOfMonth(currentDate);
     const calendarStart = new Date(monthStart);
@@ -57,7 +63,7 @@ export const CalendarGrid = ({
   return (
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
       {/* Week day headers */}
-      <div className={`grid ${isMobile ? 'grid-cols-7' : 'grid-cols-7'} bg-gray-50`}>
+      <div className={`grid grid-cols-7 bg-gray-50`}>
         {weekDays.map((day) => (
           <div
             key={day}
@@ -69,7 +75,7 @@ export const CalendarGrid = ({
       </div>
 
       {/* Calendar grid */}
-      <div className={`grid ${isMobile ? 'grid-cols-7' : 'grid-cols-7'}`}>
+      <div className={`grid ${isMobile ? `grid-cols-${calendarDays.length}` : 'grid-cols-7'}`}>
         {calendarDays.map((date) => {
           const dayEvents = getEventsForDate(date);
           const isCurrentMonth = isSameMonth(date, currentDate);
