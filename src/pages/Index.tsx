@@ -90,65 +90,70 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-6">
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Main Calendar */}
-            <div className="flex-1">
-              <div className="mb-6">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Event Calendar</h1>
-                <SearchBar 
-                  searchTerm={searchTerm}
-                  onSearchChange={setSearchTerm}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <main className="flex-1 p-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-xl p-6">
+            <div className="flex flex-col lg:flex-row gap-6">
+              {/* Main Calendar */}
+              <div className="flex-1">
+                <div className="mb-6">
+                  <h1 className="text-3xl font-bold text-gray-900 mb-4">Event Calendar</h1>
+                  <SearchBar 
+                    searchTerm={searchTerm}
+                    onSearchChange={setSearchTerm}
+                  />
+                </div>
+
+                <CalendarHeader 
+                  currentDate={currentDate}
+                  onNavigate={navigateMonth}
+                  viewMode={viewMode}
+                  setViewMode={setViewMode}
+                  onToday={() => setCurrentDate(new Date())}
+                />
+
+                <CalendarGrid
+                  currentDate={currentDate}
+                  events={filteredEvents}
+                  onDateClick={handleDateClick}
+                  onEventClick={handleEventClick}
+                  onEventDrop={handleEventDrop}
+                  viewMode={viewMode}
                 />
               </div>
 
-              <CalendarHeader 
-                currentDate={currentDate}
-                onNavigate={navigateMonth}
-                viewMode={viewMode}
-                setViewMode={setViewMode}
-                onToday={() => setCurrentDate(new Date())} // ✅ added
-              />
+              {/* Sidebar */}
+              <div className="lg:w-80">
+                {showEventForm && (
+                  <EventForm
+                    event={selectedEvent}
+                    selectedDate={selectedDate}
+                    onSave={handleEventSave}
+                    onCancel={() => {
+                      setShowEventForm(false);
+                      setSelectedEvent(null);
+                      setSelectedDate(null);
+                    }}
+                  />
+                )}
 
-              <CalendarGrid
-                currentDate={currentDate}
-                events={filteredEvents}
-                onDateClick={handleDateClick}
-                onEventClick={handleEventClick}
-                onEventDrop={handleEventDrop}
-                viewMode={viewMode}
-              />
-            </div>
-
-            {/* Sidebar */}
-            <div className="lg:w-80">
-              {showEventForm && (
-                <EventForm
-                  event={selectedEvent}
-                  selectedDate={selectedDate}
-                  onSave={handleEventSave}
-                  onCancel={() => {
-                    setShowEventForm(false);
-                    setSelectedEvent(null);
-                    setSelectedDate(null);
-                  }}
-                />
-              )}
-
-              {selectedEvent && !showEventForm && (
-                <EventDetails
-                  event={selectedEvent}
-                  onEdit={() => setShowEventForm(true)}
-                  onDelete={() => handleEventDelete(selectedEvent.id)}
-                  onClose={() => setSelectedEvent(null)}
-                />
-              )}
+                {selectedEvent && !showEventForm && (
+                  <EventDetails
+                    event={selectedEvent}
+                    onEdit={() => setShowEventForm(true)}
+                    onDelete={() => handleEventDelete(selectedEvent.id)}
+                    onClose={() => setSelectedEvent(null)}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
