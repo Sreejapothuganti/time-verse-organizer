@@ -43,3 +43,45 @@ A dynamic, responsive event calendar built with React and Tailwind CSS. Users ca
 ```bash
 git clone https://github.com/your-username/timeverse-calendar.git
 cd timeverse-calendar
+
+2. Install dependencies
+bash
+Copy
+Edit
+npm install
+3. Start the development server
+bash
+Copy
+Edit
+npm run dev
+Your app will be live at http://localhost:5173
+
+📦 Build for Production
+To build a production-ready static site:
+
+bash
+Copy
+Edit
+npm run build
+To preview the built site:
+
+bash
+Copy
+Edit
+npm run preview
+🌐 Deployment Notes
+This app is ready to deploy on any static hosting platform like Vercel, Netlify, or GitHub Pages.
+If using Vercel:
+
+No extra config needed; just import your GitHub repo.
+
+Make sure the build command is npm run build
+
+Set output directory to dist
+
+📄 Special Notes
+No external backend or database is required — events are persisted locally using localStorage.
+
+All recurring logic is computed at runtime and rendered dynamically.
+
+The calendar is fully responsive and optimized for both desktop and mobile views.
