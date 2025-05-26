@@ -1,91 +1,95 @@
-# 🗓️ TimeVerse – Custom Event Calendar
+TimeVerse – Custom Event Calendar
+A dynamic, responsive event calendar built with React and Tailwind CSS. Users can add, edit, delete, and reschedule both one-time and recurring events. Designed with a warm modern UI and smooth interactions, this app showcases advanced front-end capabilities with polished user experience features.
 
-A dynamic, responsive event calendar built with React and Tailwind CSS. Users can add, edit, delete, and reschedule both one-time and recurring events. Designed with a warm modern UI and smooth interactions, this app showcases advanced front-end capabilities with polished UX details.
+Features
+Core Functionality
+Monthly, Weekly, and Daily Views
 
----
+Add, Edit, and Delete Events
 
-## 🚀 Features
+Recurring Events: Daily, Weekly, Monthly, and Custom Intervals
 
-### ✅ Core Functionality
-- **Monthly, Weekly, and Daily Views**
-- **Add / Edit / Delete Events**
-- **Recurring Events**: Daily, Weekly, Monthly, Custom Intervals
-- **Drag-and-Drop Rescheduling**
-- **Event Conflict Detection**
-- **Search Events by Title or Description**
-- **Persistent Storage via LocalStorage**
+Drag-and-Drop Rescheduling
 
-### 🎨 Polished UI
-- Empty state illustrations (e.g., “No events”)
-- Soft transitions and hover effects
-- Mobile-first responsive layout
-- Color-coded event cards with fade-in animation
-- ARIA support and accessibility enhancements
-- Toast notifications with animated feedback
-- Built-in footer: _Built with ❤️ by Sreeja Pothuganti_
+Event Conflict Detection
 
----
+Search Events by Title or Description
 
-## 🧰 Tech Stack
+Persistent Storage using LocalStorage
 
-- **React + Vite + TypeScript**
-- **Tailwind CSS** with custom warm theme
-- **date-fns** for date/time manipulation
-- **Radix UI Toast** for notifications
-- **HTML5 Native Drag-and-Drop**
+Polished User Interface
+Empty state illustrations for days with no events
 
----
+Smooth transitions and hover interactions
 
-## 🧪 Getting Started
+Fully responsive layout optimized for mobile and desktop
 
-### 1. Clone the repository
-```bash
+Color-coded event cards with fade-in animation
+
+ARIA support for accessibility
+
+Animated toast notifications
+
+Footer credit: "Built with ❤️ by Sreeja Pothuganti"
+
+Tech Stack
+React + Vite + TypeScript
+
+Tailwind CSS with a custom warm theme
+
+date-fns for date and time manipulation
+
+Radix UI Toast for notifications
+
+Native HTML5 Drag-and-Drop API
+
+Getting Started
+1. Clone the repository
+bash
+Copy
+Edit
 git clone https://github.com/your-username/timeverse-calendar.git
 cd timeverse-calendar
-
 2. Install dependencies
 bash
 Copy
 Edit
 npm install
-
 3. Start the development server
 bash
 Copy
 Edit
 npm run dev
-Visit the app at: http://localhost:5173
+Then visit the app at: http://localhost:5173
 
-🏗️ Build for Production
+Build for Production
 bash
 Copy
 Edit
 npm run build
-To preview the built app locally:
+To preview the production build locally:
 
 bash
 Copy
 Edit
 npm run preview
-
-🌍 Deployment (Vercel / Netlify)
-This project is fully deployable on any static host like Vercel, Netlify, or GitHub Pages.
+Deployment
+This project is deployable on any static hosting platform such as Vercel, Netlify, or GitHub Pages.
 
 Build Command: npm run build
 
 Output Directory: dist
 
-No additional backend or server is required.
+No backend or database is required.
 
-📌 Notes
-All events are saved locally in your browser.
+Notes
+Events are stored in the browser's localStorage.
 
-No authentication or backend required.
+No authentication or user management is included.
 
-Recurrence logic and conflict detection run client-side.
+All recurrence logic and conflict detection is handled on the client side.
 
-Designed as part of a Kalvium frontend engineering assignment.
-
-👩‍💻 Author
+Author
 Sreeja Pothuganti
-Frontend Developer | Passionate about building delightful user experiences
+Frontend Developer
+Passionate about building clean, accessible, and delightful web interfaces.
